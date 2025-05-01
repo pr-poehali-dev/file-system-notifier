@@ -87,12 +87,17 @@ const FileItem: React.FC<FileItemProps> = ({ file, isSelected, onClick }) => {
           <span className="text-xs text-gray-500 dark:text-gray-400">
             {formatBytes(file.size)}
           </span>
-        )}
+
         {file.modifiedAt && (
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            {file.modifiedAt.toLocaleDateString()}
+            {typeof file.modifiedAt === 'string' 
+              ? file.modifiedAt 
+              : file.modifiedAt instanceof Date 
+                ? file.modifiedAt.toLocaleDateString() 
+                : new Date(file.modifiedAt).toLocaleDateString()}
           </span>
         )}
+
       </div>
     </div>
   );

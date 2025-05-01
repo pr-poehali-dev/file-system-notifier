@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import fs from 'fs';
 import path from 'path';
 
+
 // Функция для получения информации о файлах и папках
 function getFileStats(filePath: string) {
   try {
@@ -13,7 +14,7 @@ function getFileStats(filePath: string) {
       name: path.basename(filePath),
       type: stats.isDirectory() ? "directory" : "file",
       size: stats.isFile() ? stats.size : undefined,
-      modifiedAt: stats.mtime,
+      modifiedAt: stats.mtime.toISOString(), // Преобразуем в строку ISO
       path: filePath.replace(/\\/g, '/'),
     };
   } catch (error) {
@@ -21,6 +22,7 @@ function getFileStats(filePath: string) {
     return null;
   }
 }
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
