@@ -1,4 +1,3 @@
-
 import React from "react";
 import Icon from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
@@ -7,7 +6,7 @@ export type FileItemType = {
   name: string;
   type: "file" | "directory";
   size?: number;
-  modifiedAt?: Date;
+  modifiedAt?: Date | string;
   path: string;
 };
 
@@ -87,6 +86,7 @@ const FileItem: React.FC<FileItemProps> = ({ file, isSelected, onClick }) => {
           <span className="text-xs text-gray-500 dark:text-gray-400">
             {formatBytes(file.size)}
           </span>
+        )}
 
         {file.modifiedAt && (
           <span className="text-xs text-gray-500 dark:text-gray-400">
@@ -97,7 +97,6 @@ const FileItem: React.FC<FileItemProps> = ({ file, isSelected, onClick }) => {
                 : new Date(file.modifiedAt).toLocaleDateString()}
           </span>
         )}
-
       </div>
     </div>
   );
