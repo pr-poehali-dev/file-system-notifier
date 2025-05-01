@@ -30,11 +30,20 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ initialPath = "/" }) => {
     setError(null);
     
     try {
-      // Симуляция загрузки данных
-      // В реальном приложении здесь будет fetch запрос к серверу
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Запрос к реальной файловой системе через Vite API
+      const response = await fetch(`/api/files?path=${encodeURIComponent(path)}`);
       
-      // Предоставим базовые файлы для демонстрации
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setFiles(data);
+    } catch (err) {
+      setError("Ошибка при загрузке файлов. Возможно, у сервера нет доступа к файловой системе.");
+      console.error(err);
+      
+      // Показываем примерные данные в случае ошибки
       const mockFiles: FileItemType[] = [
         { name: "Документы", type: "directory", path: `${path}/Документы` },
         { name: "Загрузки", type: "directory", path: `${path}/Загрузки` },
@@ -45,9 +54,6 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ initialPath = "/" }) => {
       ];
       
       setFiles(mockFiles);
-    } catch (err) {
-      setError("Ошибка при загрузке файлов. Попробуйте обновить страницу.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
