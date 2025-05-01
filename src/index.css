@@ -5,8 +5,12 @@
 @layer base {
 
 
+
   :root {
-    --background: 220 70% 20%;
+    --background: 150 50% 25%;
+    --foreground: 150 15% 95%;
+
+
     --foreground: 210 40% 98%;
 
 
