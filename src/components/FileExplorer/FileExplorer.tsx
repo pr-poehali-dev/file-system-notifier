@@ -16,6 +16,7 @@ interface FileExplorerProps {
   initialPath?: string;
 }
 
+const FileExplorer: React.FC<FileExplorerProps> = ({ initialPath = "/" }) => {
   const initialPathWithParent = initialPath === "/" ? "/" : initialPath.split('/').slice(0, -1).join('/') || "/";
   const [currentPath, setCurrentPath] = useState(initialPathWithParent);
   const [history, setHistory] = useState<string[]>([initialPathWithParent]);
@@ -62,7 +63,6 @@ interface FileExplorerProps {
     } finally {
       setLoading(false);
     }
-
   };
 
   useEffect(() => {
@@ -98,7 +98,6 @@ interface FileExplorerProps {
     }
   };
 
-
   const goToParent = () => {
     // Для корневой директории проекта используем просто "/"
     if (currentPath === "/" || currentPath === "") {
@@ -120,7 +119,6 @@ interface FileExplorerProps {
     setHistory(newHistory);
     setHistoryIndex(newHistory.length - 1);
   };
-
 
   return (
     <Card className="w-full">
