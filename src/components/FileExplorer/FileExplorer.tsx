@@ -16,9 +16,9 @@ interface FileExplorerProps {
   initialPath?: string;
 }
 
-const FileExplorer: React.FC<FileExplorerProps> = ({ initialPath = "/" }) => {
-  const [currentPath, setCurrentPath] = useState(initialPath);
-  const [history, setHistory] = useState<string[]>([initialPath]);
+  const initialPathWithParent = initialPath === "/" ? "/" : initialPath.split('/').slice(0, -1).join('/') || "/";
+  const [currentPath, setCurrentPath] = useState(initialPathWithParent);
+  const [history, setHistory] = useState<string[]>([initialPathWithParent]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [files, setFiles] = useState<FileItemType[]>([]);
   const [loading, setLoading] = useState(true);
