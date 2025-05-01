@@ -98,18 +98,29 @@ const FileExplorer: React.FC<FileExplorerProps> = ({ initialPath = "/" }) => {
     }
   };
 
+
   const goToParent = () => {
-    const parentPath = currentPath.split('/').slice(0, -1).join('/') || '/';
-    if (parentPath !== currentPath) {
-      setCurrentPath(parentPath);
-      
-      // Обновление истории
-      const newHistory = history.slice(0, historyIndex + 1);
-      newHistory.push(parentPath);
-      setHistory(newHistory);
-      setHistoryIndex(newHistory.length - 1);
+    // Для корневой директории проекта используем просто "/"
+    if (currentPath === "/" || currentPath === "") {
+      return; // Уже в корне, никуда не переходим
     }
+    
+    // Разделяем путь на сегменты и убираем последний
+    const pathSegments = currentPath.split('/').filter(segment => segment !== "");
+    pathSegments.pop();
+    
+    // Формируем новый путь
+    const parentPath = pathSegments.length === 0 ? "/" : "/" + pathSegments.join('/');
+    
+    setCurrentPath(parentPath);
+    
+    // Обновление истории
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push(parentPath);
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
   };
+
 
   return (
     <Card className="w-full">
