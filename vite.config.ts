@@ -32,6 +32,7 @@ export default defineConfig({
       configureServer(server) {
         server.middlewares.use('/api/files', (req, res) => {
           res.setHeader('Content-Type', 'application/json');
+          res.setHeader('Access-Control-Allow-Origin', '*');
           
           try {
             const url = new URL(req.url || '/', `http://${req.headers.host}`);
@@ -85,4 +86,12 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  server: {
+    allowedHosts: [
+      'localhost',
+      'preview--file-system-notifier.poehali.dev',
+      '.poehali.dev'
+    ],
+    cors: true
+  }
 });
